@@ -1,0 +1,22 @@
+# Trigger auto-build in ubports-dipper/xiaomi-dipper repository 
+
+name: CI
+
+on:
+  push:
+    branches: [ halium-9.0 ]
+  pull_request:
+    branches: [ halium-9.0 ]
+    
+  workflow_dispatch:
+
+jobs:
+  triggerBuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send dispatch to xiaomi-dipper
+        uses: peter-evans/repository-dispatch@v1.1.3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: ubports-dipper/xiaomi-dipper
+          event-type: kernel-update
