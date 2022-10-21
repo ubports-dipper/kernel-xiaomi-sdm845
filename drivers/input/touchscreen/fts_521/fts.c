@@ -2559,7 +2559,7 @@ static void fts_enter_pointer_event_handler(struct fts_ts_info *info,
 
 	input_mt_report_slot_state(info->input_dev, tool, 1);
 	input_report_key(info->input_dev, BTN_TOUCH, touch_condition);
-	if (touch_condition)
+	if (touch_condition) {
 		input_report_key(info->input_dev, BTN_TOOL_FINGER, 1);
 
 	/*input_report_abs(info->input_dev, ABS_MT_TRACKING_ID, touchId); */
@@ -2572,6 +2572,7 @@ static void fts_enter_pointer_event_handler(struct fts_ts_info *info,
 		input_report_abs(info->input_dev, ABS_MT_PRESSURE, z);
 #endif
 		input_sync(info->input_dev);
+	}
 	dev_dbg(info->dev,
 		"%s  %s :  Event 0x%02x - ID[%d], (x, y, z) = (%3d, %3d, %3d) type = %d\n",
 		tag, __func__, *event, touchId, x, y, z, touchType);
@@ -3993,8 +3994,9 @@ static int fts_drm_state_chg_callback(struct notifier_block *nb,
 		ret = fts_disableInterrupt();
 		if (ret < OK)
 			logError(1, "%s fts_disableInterrupt ERROR %08X\n", tag, ret | ERROR_ENABLE_INTER);
-		else
+		else {
 			logError(1, "%s fts_disableInterrupt\n", tag, ret | ERROR_ENABLE_INTER);
+		}
 
 			queue_work(info->event_wq, &info->suspend_work);
 		} else if (val == DRM_EVENT_BLANK && blank == DRM_BLANK_UNBLANK) {
