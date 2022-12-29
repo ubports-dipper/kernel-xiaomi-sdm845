@@ -17,6 +17,6 @@ jobs:
       - name: Send dispatch to xiaomi-dipper
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.OAT }}
+          token: ${{ secrets.PAT }}
           repository: ubports-dipper/xiaomi-dipper
           event-type: kernel-update
